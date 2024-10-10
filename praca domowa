@@ -1,0 +1,66 @@
+-- Zadanie 1
+1.1 Tworzenie użytkownika 'programista' na 'localhost' z hasłem 'ZsIpOnTwL2024'
+CREATE USER 'programista'@'localhost' IDENTIFIED BY 'ZsIpOnTwL2024';
+
+-- 1.2 Tworzenie użytkownika 'artur' na 'localhost' z hasłem '4202LwTnOpIsZ'
+CREATE USER 'artur'@'localhost' IDENTIFIED BY '4202LwTnOpIsZ';
+
+-- 1.3 Tworzenie użytkownika 'agnieszka' z hasłem 'cYbErKnUp4920'
+CREATE USER 'agnieszka'@'%' IDENTIFIED BY 'cYbErKnUp4920';
+ 
+
+-- Usunięcie użytkownika artur: 
+DROP USER 'artur'@'localhost';
+
+-----------------------------------------------------------------------------------------------------------
+
+-- Zadanie 2
+
+-- 1.1 Tworzenie użytkownika 'mateusz' z hasłem 'KiNrOmOk2525' z pełnymi prawami do wszystkich baz danych
+CREATE USER 'mateusz'@'%' IDENTIFIED BY 'KiNrOmOk2525';
+GRANT ALL PRIVILEGES ON *.* TO 'mateusz'@'%';
+
+-- 1.2 Tworzenie użytkownika 'wojtek' z hasłem '12346' dla bazy 'nieruchomosci', bez uprawnień
+CREATE USER 'wojtek'@'%' IDENTIFIED BY '12346';
+GRANT USAGE ON nieruchomosci.* TO 'wojtek'@'%';
+
+-- 1.3 Tworzenie użytkownika 'anonim' bez hasła
+CREATE USER 'anonim'@'%';
+
+-- Wyświetlenie praw użytkownika mateusz:
+SHOW GRANTS FOR 'mateusz'@'%';
+
+----------------------------------------------------------------------------------------------------------
+
+-- Zadanie 3
+
+
+-- 1. Przeglądanie i aktualizacja do tabeli 'programy' w bazie 'firma' dla użytkownika 'programista'
+GRANT SELECT, UPDATE ON firma.programy TO 'programista'@'localhost';
+
+-- 2. Wybieranie, wstawianie i aktualizacja danych w tabeli 'piosenki' dla użytkownika 'artur'
+GRANT SELECT, INSERT, UPDATE ON piosenki TO 'artur'@'localhost';
+
+-- 3. CREATE, ALTER, DROP do tabeli 'rachunki' w bazie 'wynajem' dla użytkownika 'agnieszka'
+GRANT CREATE, ALTER, DROP ON wynajem.rachunki TO 'agnieszka'@'%';
+
+-- 4. Aktualizowanie kolumny 'opis' w tabeli 'przedmiot' w bazie 'magazyn' dla użytkownika 'kolumnista'
+GRANT UPDATE (opis) ON magazyn.przedmiot TO 'kolumnista'@'%';
+
+-----------------------------------------------------------------------------------------------------------
+
+--  Zadanie 4
+
+-- 1.1 Pełne prawa do bazy 'restauracja' dla użytkownika 'mateusz'
+GRANT ALL PRIVILEGES ON restauracja.* TO 'mateusz'@'%';
+
+-- 1.2 Przeglądanie zawartości wszystkich tabel w bazie 'restauracja' oraz dodawanie nowych danych do tabeli 'klienci' dla użytkownika 'wojtek'
+GRANT SELECT ON restauracja.* TO 'wojtek'@'%';
+GRANT INSERT ON restauracja.klienci TO 'wojtek'@'%';
+
+
+-- 1.3 Przeglądanie zawartości tabeli 'klienci' dla użytkownika 'anonim'
+GRANT SELECT ON restauracja.klienci TO 'anonim'@'%';
+
+REVOKE GRANT OPTION ON *.* FROM 'mateusz'@'%';
+
